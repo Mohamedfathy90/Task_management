@@ -130,23 +130,6 @@ columns: [
 order: [[0, 'desc']]
 });
 
-$('#startdate').change(function(){   
-    table_alltasks.draw();
-    table_issued_tasks.draw();
-});
-$('#enddate').change(function(){  
-    table_alltasks.draw();
-    table_issued_tasks.draw();
-});
-$('#site').change(function(){   
-    table_alltasks.draw();
-    table_issued_tasks.draw();
-});
-$('#status').change(function(){   
-    table_alltasks.draw();
-    table_issued_tasks.draw();
-});
-
 var path = "{{route('autocomplete')}}" ;
 $('#search_tag').typeahead({
     items: 9999,
@@ -174,5 +157,44 @@ success : function(response) {
 } 
 });
 });
+
+
+var table_equip_status = $('#datatable-status').DataTable({
+stateSave: true,
+processing: true,
+serverSide: true,
+ajax:{
+url:'{{Route::currentRouteName()}}',
+},
+columns: [
+{data: 'DT_RowIndex', name: '', orderable: false, searchable: false},
+{ data: 'equip_tag', name: 'equip_tag' },
+{ data: 'date', name: 'date',width:'100' },
+{ data: 'status', name: 'status' },
+{ data: 'remarks', name: 'remarks' },
+],
+order: [[0, 'desc']]
+}); 
+
+
+$('#startdate').change(function(){   
+    table_alltasks.draw();
+    table_issued_tasks.draw();
+});
+$('#enddate').change(function(){  
+    table_alltasks.draw();
+    table_issued_tasks.draw();
+});
+$('#site').change(function(){   
+    table_alltasks.draw();
+    table_issued_tasks.draw();
+});
+$('#status').change(function(){   
+    table_alltasks.draw();
+    table_issued_tasks.draw();
+});
+
+
+
 
 </script>   

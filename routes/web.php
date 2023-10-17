@@ -33,6 +33,9 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::post('/task/add',[TaskController::class, 'issue_task'] );
     Route::get('/task/get_data',[TaskController::class, 'get_task_data'] )->name('autocomplete');
     Route::post('/task/description',[TaskController::class, 'get_equip_desc'] );
+    Route::get('/equipment_status',[TaskController::class, 'equip_status_index'] )->name('status');
+    Route::post('/get_equip_status',[TaskController::class, 'get_equip_status'] );
+    Route::get('/show_equip_status/{equipment:tag}',[TaskController::class, 'show_equip_status'] );
 });
 
 Route::middleware('auth')->group(function () {

@@ -7,7 +7,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="card mb-3">
-                    <div class="card-body">
+                     <div class="card-body">
                     
                     
                         <div class="form-group"  @if(auth()->user()->role == 'admin') style="float: left;" @endif>

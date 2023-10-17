@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\Schedule;
 use App\Models\Department;
 use App\Models\Equipment;
+use App\Models\equiStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -128,7 +129,7 @@ class TaskController extends Controller
 
     public function assign(Task $task){
         $today=date('Y-m-d');
-        $attendees = Schedule::with('user')->where(['date'=>$today,'location'=>$task->site])->get();
+        $attendees = Schedule::with('user')->where(['date'=>$today,'site'=>$task->site])->get();
         return view('assign_task',['task'=>$task , 'attendees'=>$attendees]);
     }
 
@@ -208,4 +209,39 @@ class TaskController extends Controller
         $description = Equipment::where('tag',$request->tag)->first()->description;
         return response()->json(['description'=>$description]);
     }
-}
+
+    public function equip_status_index (){
+        return view ('equip_status');
+    }
+
+    public function get_equip_status(Request $request){   
+        return redirect('/show_equip_status/'.$request->tag);
+    }
+        
+    
+    public function show_equip_status(Equipment $equipment){
+        $status_rows = equiStatus::where('equip_tag',$equipment->tag)->orderby('date')->get();
+    
+        if(request()->ajax()) {   
+            return datatables()->of($status_rows)
+
+            ->addColumn('status', function($row){
+                if($row['status']==='in service')
+                return '<span class="badge badge-success">In Service</span>';
+                if($row['status']==='out of service')
+                return '<span class="badge badge-danger">Out of Service</span>';
+                })
+        
+            ->rawColumns(['status'])
+            ->addIndexColumn()
+            ->make(true);
+            } 
+            return view('show_equipment_status');
+    
+         }
+    }
+    
+
+
+
+    

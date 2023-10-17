@@ -23,6 +23,9 @@
                     <x-nav-link :href="route('issued')" :active="request()->routeIs('issued')">
                         {{ __('Issued Workorders') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('status')" :active="request()->routeIs('status')">
+                        {{ __('Equipment Status') }}
+                    </x-nav-link>
                     @endif 
                 </div>
             </div>
