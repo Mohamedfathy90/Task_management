@@ -10,10 +10,10 @@
                      <div class="card-body">
                     
                     
-                        <div class="form-group"  @if(auth()->user()->role == 'admin') style="float: left;" @endif>
+                        <div class="form-group" style="display:inline-block">
                             <label><strong>Filter By Status</strong></label>
                             <select id='status' class="form-control" style="width: 200px">
-                                <option value="">--Select Status--</option>
+                                <option value="">--All Tasks--</option>
                                 <option value="in progress">In Progress</option>
                                 <option value="pending">Pending</option>
                                 <option value="completed">Completed</option>
@@ -21,7 +21,7 @@
                         </div>
                         
                         @if(auth()->user()->role == 'admin')
-                        <div class="form-group" style="margin-left:20%;">
+                        <div class="form-group" style="display:inline-block;margin-left:5%">
                             <label><strong>Filter By Site</strong></label>
                             <select id='site' class="form-control" style="width: 200px">
                                 <option value="">--Select Site--</option>
@@ -35,6 +35,15 @@
                             </select>
                         </div>
                         @endif
+
+                        <div class="form-group"  @if(auth()->user()->role == 'admin') style="display:inline-block;margin-left:8%" @else style="display:inline-block;margin-left:5%;" @endif>
+                            <label><strong>Filter By Task type</strong></label>
+                            <select id='type' class="form-control" style="width: 200px">
+                                <option value="">--All Tasks--</option>
+                                <option value="PM">PM</option>
+                                <option value="CM">CM</option>
+                            </select>
+                        </div>
                         
                         <div class="form-group ">
                             <label ><strong>Filter By date</strong></label><br>

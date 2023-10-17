@@ -87,6 +87,7 @@ ajax: {
      d.site = $('#site').val()
      d.startdate = $('#startdate').val()
      d.enddate = $('#enddate').val()
+     d.type = $('#type').val()
     }
    },
 columns: [
@@ -114,6 +115,7 @@ ajax: {
      d.site = $('#site').val()
      d.startdate = $('#startdate').val()
      d.enddate = $('#enddate').val()
+     d.type = $('#type').val()
     }
    },
 columns: [
@@ -190,6 +192,10 @@ $('#site').change(function(){
     table_issued_tasks.draw();
 });
 $('#status').change(function(){   
+    table_alltasks.draw();
+    table_issued_tasks.draw();
+});
+$('#type').change(function(){   
     table_alltasks.draw();
     table_issued_tasks.draw();
 });
