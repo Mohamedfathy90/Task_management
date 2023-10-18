@@ -71,6 +71,9 @@ class TaskController extends Controller
                     if ($request->get('site') != '') {
                         $instance->where('site', $request->get('site'));
                     }
+                    if ($request->get('type') != '') {
+                        $instance->where('job_type', $request->get('type'));
+                    }
                     if ($request->get('startdate') != '' && $request->get('enddate') == '' ) {
                         $instance->where( 'due_date' , '>' , $request->get('startdate'));
                     }
@@ -160,6 +163,9 @@ class TaskController extends Controller
                     if ($request->get('site') != '') {
                         $instance->where('site', $request->get('site'));
                     }
+                    if ($request->get('type') != '') {
+                        $instance->where('job_type', $request->get('type'));
+                    }
                     if ($request->get('startdate') != '' && $request->get('enddate') == '' ) {
                         $instance->where( 'due_date' , '>' , $request->get('startdate'));
                     }
@@ -186,6 +192,13 @@ class TaskController extends Controller
     } 
 
     public function issue_task(Request $request){
+        
+        $request->validate([
+            'tag'            => ['required' , 'exists:equipment,tag'] ,
+            'remarks'        => ['required'],
+            'execution_dep'  => ['required']
+        ]);
+        
         Task::create([
             'site' => $request->site ,
             'execution_dep' => "$request->execution_dep" ,
@@ -215,6 +228,10 @@ class TaskController extends Controller
     }
 
     public function get_equip_status(Request $request){   
+        $credentials = $request->validate([
+            'tag'=> ["required" , "exists:equipment,tag"]
+        ],['tag'=>"please enter equipment tag",'tag.exists'=>"Equipment Tag doesn't exist"]);
+        
         return redirect('/show_equip_status/'.$request->tag);
     }
         

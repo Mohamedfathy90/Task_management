@@ -33,7 +33,10 @@
                                <div id="search-autocomplete" class="form-outline">
                                <label class="form-label" for="search">Equipment Tag</label> 
                                <input type="text" id="search_tag" name="tag" class="typeahead form-control col-9" style="max-height: 150px;overflow-y: auto;"/>
-                                </div>
+                               @error('tag')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror  
+                              </div>
                               </div>
                     <div class="form-group" style="margin-left: 80px;">
                         <label>Equipment_description:</label>
