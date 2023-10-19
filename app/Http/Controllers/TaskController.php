@@ -7,6 +7,7 @@ use App\Models\Schedule;
 use App\Models\Department;
 use App\Models\Equipment;
 use App\Models\equiStatus;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -88,7 +89,13 @@ class TaskController extends Controller
                     }
                 })
             
-            ->rawColumns(['status','assignment'])
+                ->addColumn('transaction_id', function($row){
+                        $actionBtn = '<a href="transaction_details/'.$row['transaction_id'].'">'.$row['transaction_id'].'</a>';
+                        return $actionBtn;  
+                       
+                     })
+
+            ->rawColumns(['status','assignment','transaction_id'])
             ->addIndexColumn()
             ->make(true);
             } 
@@ -155,6 +162,13 @@ class TaskController extends Controller
                     if($row['status']==='pending')
                     return '<span class="badge badge-danger">pending</span>';
                     })
+                
+                ->addColumn('image', function($row){
+                    if($row['image']!='')
+                    return '<img src="'.$row['image'].'"></$row>' ;
+                    else 
+                    return '';
+                })
 
                 ->filter(function ($instance) use ($request) {
                     if ($request->get('status') != '') {
@@ -180,7 +194,7 @@ class TaskController extends Controller
                     }
                 })
             
-            ->rawColumns(['status'])
+            ->rawColumns(['status','image'])
             ->addIndexColumn()
             ->make(true);
             } 
@@ -196,17 +210,27 @@ class TaskController extends Controller
         $request->validate([
             'tag'            => ['required' , 'exists:equipment,tag'] ,
             'remarks'        => ['required'],
-            'execution_dep'  => ['required']
+            'execution_dep'  => ['required'],
+            'image'          => ['image']
         ]);
         
+        if($request->has('image')){
+        $image_name = 'img_'.time().'.'.request('image')->getclientoriginalextension();
+        request()->file('image')->storeAs('/workorder_images',$image_name);
+        $image_location = "/storage/workorder_images/".$image_name ;
+        }
+        else{
+        $image_location='';
+        }
         Task::create([
             'site' => $request->site ,
             'execution_dep' => "$request->execution_dep" ,
             'request_dep' => $request->request_dep ,
             'equipment_tag' => $request->tag ,
-            'remarks' => $request->remarks ,
+            'task_desc' => $request->remarks ,
+            'image' => $image_location ,
+            'status'=>'in progress',
             'job_type' => "CM" ,
-            'task_desc' => "Unsheduled Task" ,
             'due_date' => date('Y-m-d') ,
         ]);
 
@@ -254,9 +278,19 @@ class TaskController extends Controller
             ->make(true);
             } 
             return view('show_equipment_status');
-    
+         }
+
+    public function show_transaction_details ($transaction_id){
+        $transactions = Transaction::where('transaction_id', $transaction_id);
+        if(request()->ajax()) {   
+            return datatables()->of($transactions)        
+            ->addIndexColumn()
+            ->make(true);
+            } 
+            return view('show_transaction_details');
          }
     }
+    
     
 
 

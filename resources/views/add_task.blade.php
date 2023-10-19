@@ -13,7 +13,7 @@
                 <div class="card">
                   <div class="card-body">
                   
-                  <form id="add_task" action="/task/add" method="post">
+                  <form id="add_task" action="/task/add" method="post" enctype="multipart/form-data">
                     @csrf 
                     
                           <div class="form-group" style="margin-left: 80px;">
@@ -39,12 +39,12 @@
                                 <select id='select' class="form-control col-9" name="site" >
                                 <option value="">--Select Site--</option>
                                 <option value="MED" {{ old('site')== "MED" ? 'selected' : "" }}>MEADIA</option>
-                                <option value="P1" {{ old('site')== "P1" ? 'selected' : "" }}>>PI</option>
-                                <option value="P2" {{ old('site')== "P2" ? 'selected' : "" }}>>PII</option>
-                                <option value="WAQ"{{ old('site')== "WAQ" ? 'selected' : "" }}>>WAQ</option>
-                                <option value="NAQ" {{ old('site')== "NAQ" ? 'selected' : "" }}>>NAQ-PI</option>
-                                <option value="NAQP2" {{ old('site')== "NAQP2" ? 'selected' : "" }}>>NAQ-PII</option>
-                                <option value="NAQP3" {{ old('site')== "NAQP3" ? 'selected' : "" }}>>NAQ-PIII</option>  
+                                <option value="P1" {{ old('site')== "P1" ? 'selected' : "" }}>PI</option>
+                                <option value="P2" {{ old('site')== "P2" ? 'selected' : "" }}>PII</option>
+                                <option value="WAQ"{{ old('site')== "WAQ" ? 'selected' : "" }}>WAQ</option>
+                                <option value="NAQ" {{ old('site')== "NAQ" ? 'selected' : "" }}>NAQ-PI</option>
+                                <option value="NAQP2" {{ old('site')== "NAQP2" ? 'selected' : "" }}>NAQ-PII</option>
+                                <option value="NAQP3" {{ old('site')== "NAQP3" ? 'selected' : "" }}>NAQ-PIII</option>  
                                 </select>
                           </div>
                               
@@ -63,6 +63,14 @@
                               <input id="desc" name="description" type="text" class='form-control col-9'  value="{{old('description')}}" readonly>
                           </div>
                     
+                          <div class="form-group" style="margin-left: 80px;">
+                              <label>Add Photo</label>
+                              <input type="file" class='form-control' name="image">
+                              @error('image')
+                              <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                          
                           <div class="form-group" style="margin-left: 80px;">
                               <label>Remarks:</label>
                               <textarea class='form-control col-9' style="height:150px;" name="remarks" value="" ></textarea> 

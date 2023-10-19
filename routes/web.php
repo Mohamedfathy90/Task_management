@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/equipment_status',[TaskController::class, 'equip_status_index'] )->name('status');
     Route::post('/get_equip_status',[TaskController::class, 'get_equip_status'] );
     Route::get('/show_equip_status/{equipment:tag}',[TaskController::class, 'show_equip_status'] );
+    Route::get('/transaction_details/{transaction_id}',[TaskController::class, 'show_transaction_details']);
 });
 
 Route::middleware('auth')->group(function () {

@@ -46,18 +46,18 @@
                     </div>
                 </div>
                            
-                <table class="table table-bordered" id="issued-tasks">
+                <table class="table table-bordered" id="issued-tasks" style="margin-left: -13px;">
                     <thead>
                     <tr>
                     <th>No.</th>
                     <th>Site</th>
                     <th>Equipment_tag</th>
-                    <th>Equipment_desc</th>
                     <th>Execution_department</th>
                     <th>Task_desc</th>
                     <th>Due_Date</th>
                     <th>Job_type</th>
                     <th>Status</th>
+                    <th>Image</th>
                     </tr>
                     </thead>
                     </table>

@@ -99,6 +99,7 @@ columns: [
 { data: 'due_date', name: 'due_date' },
 { data: 'job_type', name: 'job_type' },
 { data: 'status', name: 'status' },
+{ data: 'transaction_id', name: 'transaction_id' },
 { data: 'assignment', name: 'assignment' },
 ],
 order: [[0, 'desc']]
@@ -122,15 +123,53 @@ columns: [
 {data: 'DT_RowIndex', name: '', orderable: false, searchable: false},
 { data: 'site', name: 'site' },
 { data: 'equipment_tag', name: 'equipment_tag' },
-{ data: 'equipment_desc', name: 'equipment_desc' },
 { data: 'execution_dep', name: 'execution_dep' },
-{ data: 'task_desc', name: 'task_desc' },
+{ data: 'task_desc', name: 'task_desc',width:'300'},
 { data: 'due_date', name: 'due_date' },
 { data: 'job_type', name: 'job_type' },
 { data: 'status', name: 'status' },
+{ data: 'image', name: 'image' , width:'300'},
 ],
 order: [[0, 'desc']]
 });
+
+var table_equip_status = $('#datatable-status').DataTable({
+stateSave: true,
+processing: true,
+serverSide: true,
+ajax:{
+url:'{{Route::currentRouteName()}}',
+},
+columns: [
+{data: 'DT_RowIndex', name: '', orderable: false, searchable: false},
+{ data: 'equip_tag', name: 'equip_tag' },
+{ data: 'date', name: 'date', width:'100' },
+{ data: 'status', name: 'status' },
+{ data: 'remarks', name: 'remarks' },
+],
+order: [[0, 'desc']]
+}); 
+
+var table_transaction_details = $('#datatable-transaction').DataTable({
+stateSave: true,
+processing: true,
+serverSide: true,
+ajax: {
+url: '{{Route::currentRouteName()}}',  
+},
+columns: [
+{data: 'DT_RowIndex', name: '', orderable: false, searchable: false},
+{ data: 'transaction_id', name: 'transaction_id' },
+{ data: 'transaction_date', name: 'transaction_date' },
+{ data: 'equipment_tag', name: 'equipment_tag' },
+{ data: 'material_code', name: 'material_code'},
+{ data: 'material_description', name: 'material_description' },
+{ data: 'plant', name: 'plant' },
+{ data: 'quantity', name: 'quantity' },
+],
+order: [[0, 'desc']]
+});
+
 
 var path = "{{route('autocomplete')}}" ;
 $('#search_tag').typeahead({
@@ -159,24 +198,6 @@ success : function(response) {
 } 
 });
 });
-
-
-var table_equip_status = $('#datatable-status').DataTable({
-stateSave: true,
-processing: true,
-serverSide: true,
-ajax:{
-url:'{{Route::currentRouteName()}}',
-},
-columns: [
-{data: 'DT_RowIndex', name: '', orderable: false, searchable: false},
-{ data: 'equip_tag', name: 'equip_tag' },
-{ data: 'date', name: 'date',width:'100' },
-{ data: 'status', name: 'status' },
-{ data: 'remarks', name: 'remarks' },
-],
-order: [[0, 'desc']]
-}); 
 
 
 $('#startdate').change(function(){   

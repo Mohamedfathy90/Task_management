@@ -66,6 +66,7 @@
                     <th>Due_Date</th>
                     <th>Job_type</th>
                     <th>Status</th>
+                    <th>Transaction</th>
                     @if(auth()->user()->role =='admin')
                     <th> Assign  </th>               
                     @else
